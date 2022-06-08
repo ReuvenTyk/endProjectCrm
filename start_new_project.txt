@@ -1,0 +1,31 @@
+1. install packages:
+ - npm init -y
+ - npm i express
+ - npx express-generator --view=false 
+ - npm i nodemon
+ - npm i mysql2/mongodb
+ - npm i joi --> validation
+ - npm i socket.io --> streaming for chat
+ - npm i bcrypt --> encryption for the files
+ - npm i jsonwebtoken --> for login
+
+2. in package.json file--> change start from node to nodemon
+
+ - to open the server --> SET DEBUG='the name of the project:*'; npm start 
+
+3. create a folder config with a dev.js file
+
+4. create .gitignore file for the files you want to ignore (from uploading to github)
+
+5. create a README.md file for the init process
+
+6. create a controllers folder --> for the .js files (database,functions)
+    - create database.js --> to connect from the dev.js to the database
+
+7. change public to client --> not must
+
+8. change in index.js file the render to send and change the ()
+
+9. create database on mysql or mongodb
+
+10. make a todo list
