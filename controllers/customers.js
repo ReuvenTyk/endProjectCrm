@@ -1,6 +1,7 @@
 const joi = require("joi");
 const bcrypt = require("bcrypt");
 const database = require("./database");
+const auth = require("./auth");
 const fileMgmt = require("../shared/fileMgmt");
 
 module.exports = {
@@ -49,4 +50,17 @@ module.exports = {
     }
     res.status(200).send(`${reqBody.name} added successfully`);
   },
+  getCustomer: async function (req, res, next) {
+    const id = req.user.id;
+    const sql = `SELECT name,email,client_type FROM customers WHERE id=?;`;
+
+    try {
+      const result = await database.query(sql, [id]);
+      res.send(result[0]);
+    } catch (err) {
+      res.status(400).send(`search is Invalid: ${err}`);
+      throw err;
+    }
+  },
+  addCard: async function (req, res, next) {},
 };

@@ -13,7 +13,7 @@ module.exports = {
       password: joi.string().required().min(6),
     });
 
-    const { error } = (schema = schema.validate(reqBody));
+    const { error } = schema.validate(reqBody);
 
     if (error) {
       res.status(401).send("please log in first");
@@ -21,16 +21,27 @@ module.exports = {
     }
 
     const sql = "SELECT * FROM customers WHERE email=?";
+
     try {
       const result = await database.query(sql, [reqBody.email]);
+      const rows = result[0];
       const validPassword = await bcrypt.compare(
         reqBody.password,
         rows[0].password_hash
       );
       if (!validPassword) throw "Password Incorrect, try again";
 
-      const param = { email: reqBody.email };
-      const token = jwt.sign(param, config.JWT_SECRET, { expiresIn: "72800s" });
+      const param = { id: rows[0].id, email: rows[0].email };
+      const token = jwt.sign(param, config.JWT_SECRET, {
+        expiresIn: "72800s",
+      });
+
+      res
+        .cookie("access_token", token, {
+          httpOnly: true,
+          secure: true,
+        })
+        .send("you are now logged in");
     } catch (err) {
       res.status(401).send("please log in first");
       throw `Error: ${err}`;
