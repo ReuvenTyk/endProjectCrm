@@ -8,6 +8,7 @@ const auth = require("./middleware/auth");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var customersRouter = require("./routes/customers");
+var cardsRouter = require("./routes/cards");
 
 var app = express();
 
@@ -20,5 +21,6 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/users", auth, usersRouter);
 app.use("/customers", auth, customersRouter);
+app.use("/cards", auth, cardsRouter);
 
 module.exports = app;

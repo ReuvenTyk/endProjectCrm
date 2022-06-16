@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const cm = require("../controllers/customers");
+const cam = require("../controllers/cards");
 const mwAuth = require("../middleware/auth");
 const fileMgmt = require("../shared/fileMgmt");
 
@@ -14,7 +14,9 @@ router.get("/page", mwAuth, function (req, res, next) {
   res.sendFile(filePath);
 });
 
-router.post("/", cm.addCustomer);
-router.get("/details", mwAuth, cm.getCustomer);
+router.get("/", mwAuth, cam.getCard);
+router.get("/export", mwAuth, cam.getAllCards);
+router.post("/", mwAuth, cam.addCard);
+router.delete("/:id", mwAuth, cam.deleteCard);
 
 module.exports = router;

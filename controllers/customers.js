@@ -2,7 +2,6 @@ const joi = require("joi");
 const bcrypt = require("bcrypt");
 const database = require("./database");
 const auth = require("./auth");
-const fileMgmt = require("../shared/fileMgmt");
 
 module.exports = {
   addCustomer: async function (req, res, next) {
@@ -62,5 +61,4 @@ module.exports = {
       throw err;
     }
   },
-  addCard: async function (req, res, next) {},
 };

@@ -11,5 +11,65 @@
     <form method="get" action="/customers/details">
       <button type="submit">Customers Details</button>
     </form>
+
+    <h3>Get All Business Cards</h3>
+    <form method="get" action="/cards/export">
+      <button type="submit">Get All</button>
+    </form>
+
+    <h3>Add business Card</h3>
+    <form method="post" action="/cards/">
+      <div>
+        <label for="business_name">Business Name:</label>
+        <input type="text" name="business_name" id="business_name" \ />
+      </div>
+      <div>
+        <label for="description">Description:</label>
+        <input type="text" name="description" id="description" \ />
+      </div>
+      <div>
+        <label for="address">Address:</label>
+        <input type="text" name="address" id="address" \ />
+      </div>
+      <div>
+        <label for="phone">Phone:</label>
+        <input type="number" name="phone" id="phone" \ />
+      </div>
+      <div>
+        <label for="image">image:</label>
+        <input type="text" name="image" id="image" \ />
+      </div>
+      <button type="submit">Add Card</button>
+    </form>
+
+    <h3>Card Details</h3>
+    <form method="get" action="/cards/">
+      <div>
+        <label for="card">Choose Business Id:</label>
+        <input type="number" name="card" id="card" \ />
+      </div>
+      <button type="submit">Card Details</button>
+    </form>
+
+    <h3>Delete Card</h3>
+    <div>
+      <label>Choose Business Id:</label>
+      <input type="number" id="delete_id" \ />
+      <input type="button" id="delete_btn" value="Delete Card" />
+    </div>
+
+    <script>
+      deleteBtn = document.getElementById("delete_btn");
+      deleteBtn.addEventListener("click", () => {
+        const delete_id = document.getElementById("delete_id").value;
+        deleteCard(delete_id);
+      });
+
+      function deleteCard(id) {
+        return fetch(`http://localhost:3000/cards/${id}`, {
+          method: "DELETE",
+        });
+      }
+    </script>
   </body>
 </html>
