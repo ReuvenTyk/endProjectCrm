@@ -39,7 +39,7 @@ module.exports = {
         reqBody.phone,
         reqBody.image,
       ]);
-      res.status(200).send(`the new business ${result[0]} added`);
+      res.status(200).send(`the new business ${reqBody.business_name} added`);
     } catch (err) {
       throw err;
     }
@@ -132,8 +132,8 @@ module.exports = {
     const sql = `UPDATE client_business_card SET ${fields} WHERE id=?`;
     try {
       const result = await database.query(sql, values);
-      res.json(reqBody);
       console.log("the card got updated");
+      res.json(reqBody);
     } catch (err) {
       res.status(400).send(`error updating card: ${err}`);
       throw err;

@@ -126,7 +126,7 @@
 
       function clean(obj) {
         for (const propName in obj) {
-          if (obj[propName] === "") {
+          if (!obj[propName]) {
             delete obj[propName];
           }
         }
