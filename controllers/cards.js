@@ -60,7 +60,6 @@ module.exports = {
 
   getCard: async function (req, res, next) {
     const param = req.query;
-    console.log(param);
 
     const schema = joi.object({
       card: joi.number().required(),
@@ -102,6 +101,41 @@ module.exports = {
       console.log(`the card got deleted: ${value.id}`);
     } catch (err) {
       res.status(400).send(`search is Invalid: ${err}`);
+      throw err;
+    }
+  },
+
+  updateCard: async function (req, res, next) {
+    const reqBody = req.body;
+    const schema = joi
+      .object({
+        business_name: joi.string().min(2).max(100),
+        description: joi.string().min(2).max(500),
+        address: joi.string().min(2).max(100),
+        phone: joi.string().regex(/^[0-9]\d{8,11}$/),
+        image: joi.string(),
+      })
+      .min(1);
+
+    const { error, value } = schema.validate(reqBody);
+
+    if (error) {
+      res.status(400).send(`error updating card: ${error}`);
+      throw error;
+    }
+
+    const keys = Object.keys(value);
+    const values = Object.values(value);
+    const fields = keys.map((key) => `${key}=?`).join(",");
+    values.push(req.params.id);
+
+    const sql = `UPDATE client_business_card SET ${fields} WHERE id=?`;
+    try {
+      const result = await database.query(sql, values);
+      res.json(reqBody);
+      console.log("the card got updated");
+    } catch (err) {
+      res.status(400).send(`error updating card: ${err}`);
       throw err;
     }
   },

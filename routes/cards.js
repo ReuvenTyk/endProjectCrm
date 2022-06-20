@@ -18,5 +18,6 @@ router.get("/", mwAuth, cam.getCard);
 router.get("/export", mwAuth, cam.getAllCards);
 router.post("/", mwAuth, cam.addCard);
 router.delete("/:id", mwAuth, cam.deleteCard);
+router.put("/:id", /* mwAuth, */ cam.updateCard);
 
 module.exports = router;

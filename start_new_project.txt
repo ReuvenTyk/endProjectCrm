@@ -29,3 +29,5 @@
 9. create database on mysql or mongodb
 
 10. make a todo list
+
+11. to add angular -->ng new client-angular --skip-git (if doesn't want to connect to github)

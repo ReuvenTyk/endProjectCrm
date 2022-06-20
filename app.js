@@ -2,7 +2,6 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-
 const auth = require("./middleware/auth");
 
 var indexRouter = require("./routes/index");
@@ -21,6 +20,6 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/users", auth, usersRouter);
 app.use("/customers", auth, customersRouter);
-app.use("/cards", auth, cardsRouter);
+app.use("/cards", /* auth, */ cardsRouter);
 
 module.exports = app;

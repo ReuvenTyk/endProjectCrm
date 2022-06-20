@@ -58,6 +58,35 @@
       <input type="button" id="delete_btn" value="Delete Card" />
     </div>
 
+    <h3>Update business Card</h3>
+    <div>
+      <label for="id">Which ID To update:</label>
+      <input type="number" name="id" id="id" \ />
+    </div>
+    <form id="update_card">
+      <div>
+        <label for="business_name">New Business Name:</label>
+        <input type="text" name="business_name" id="business_name" \ />
+      </div>
+      <div>
+        <label for="description">New Description:</label>
+        <input type="text" name="description" id="description" \ />
+      </div>
+      <div>
+        <label for="address">New Address:</label>
+        <input type="text" name="address" id="address" \ />
+      </div>
+      <div>
+        <label for="phone">New Phone:</label>
+        <input type="number" name="phone" id="phone" \ />
+      </div>
+      <div>
+        <label for="image">New image:</label>
+        <input type="text" name="image" id="image" \ />
+      </div>
+      <button type="submit">Update Card</button>
+    </form>
+
     <script>
       deleteBtn = document.getElementById("delete_btn");
       deleteBtn.addEventListener("click", () => {
@@ -70,6 +99,41 @@
           method: "DELETE",
         });
       }
+
+      function handleSubmit() {
+        event.preventDefault();
+
+        const data = new FormData(event.target);
+
+        const value = Object.fromEntries(data.entries());
+
+        const clean_data = clean(value);
+
+        updateCard(value);
+      }
+
+      function updateCard(data) {
+        id = document.getElementById("id").value;
+        return fetch(`http://localhost:3000/cards/${id}`, {
+          method: "PUT",
+          body: JSON.stringify(data),
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        });
+      }
+
+      function clean(obj) {
+        for (const propName in obj) {
+          if (obj[propName] === "") {
+            delete obj[propName];
+          }
+        }
+        return obj;
+      }
+      const updateForm = document.getElementById("update_card");
+      updateForm.addEventListener("submit", handleSubmit);
     </script>
   </body>
 </html>
